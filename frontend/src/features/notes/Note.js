@@ -8,7 +8,7 @@ import { selectNoteById } from './notesApiSlice'
 const Note = ({ noteId }) => {
     const note = useSelector(state => selectNoteById(state, noteId))
 
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
     if (note) {
         const created = new Date(note.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long' })
