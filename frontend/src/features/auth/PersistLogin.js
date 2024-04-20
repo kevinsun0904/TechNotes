@@ -10,6 +10,8 @@ const PersistLogin = () => {
     const [persist] = usePersist()
     const token = useSelector(selectCurrentToken)
     const effectRan = useRef(false)
+    
+    effectRan.current = true
 
     const [trueSuccess, setTrueSuccess] = useState(false)
 
@@ -38,7 +40,7 @@ const PersistLogin = () => {
                 }
             }
 
-            if (!token && persist) verifyRefreshToken()
+            if (persist) verifyRefreshToken()
         }
 
         return () => effectRan.current = true
@@ -57,7 +59,7 @@ const PersistLogin = () => {
         console.log('error')
         content = (
             <p className='errmsg'>
-                {error.data?.message}
+                {`${error.data?.message} - `}
                 <Link to="/login">Please login again</Link>.
             </p>
         )
@@ -68,8 +70,8 @@ const PersistLogin = () => {
         console.log('token and uninit')
         console.log(isUninitialized)
         content = <Outlet />
-    }
-
+    } 
+    
     return content
 }
 export default PersistLogin
