@@ -34,7 +34,7 @@ const createNewNote = asyncHandler(async (req, res) => {
     }
 
     // Check for duplicate
-    const duplicate = await Note.findOne({ title }).lean().exec()
+    const duplicate = await Note.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
     if (duplicate) {
         return res.status(409).json({ message: 'Diplicate note title' })
@@ -69,7 +69,7 @@ const updateNote = asyncHandler(async (req, res) => {
     }
 
     // Check if for duplicate title
-    const duplicate = await Note.findOne({ title }).lean().exec()
+    const duplicate = await Note.findOne({ title }).collation({ locale: 'en', strength: 2 }).lean().exec()
 
     // Allow renaming note to its own name
     if (duplicate && duplicate?._id.toString() != id) {
